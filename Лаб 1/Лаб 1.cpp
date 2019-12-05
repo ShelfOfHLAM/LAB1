@@ -20,6 +20,7 @@ void task2() {
 	double dynamictime1;
 	double dynamictime2;
 	double dynamictime3;
+
 	double statictime1;
 	double statictime2;
 	double statictime3;
@@ -198,7 +199,7 @@ void task2() {
 	guidedtime3 = omp_get_wtime() - starttime;
 
 	cout << "Dynamic Time" << " " << "Static time" << " " << "Guided Time" << "Runtime time" << " " << endl;
-	cout.precision(1);
+	cout.precision(3);
 	cout << dynamictime1 << " " << statictime1 << " " << guidedtime1 << " " << runtimetime1 << " " << endl;
 	cout << dynamictime2 << " " << statictime2 << " " << guidedtime2 << " " << runtimetime2 << " " << endl;
 	cout << dynamictime3 << " " << statictime3 << " " << guidedtime3 << " " << runtimetime3 << " " << endl;
@@ -220,7 +221,7 @@ void task3()
 		sum += array[i];
 	}
 	cout << "Sum is " << sum << endl;
-	cout << "Critica time is " << omp_get_wtime() - starttime1 << endl;
+	cout << "Critical time is " << omp_get_wtime() - starttime1 << endl;
 
 	double starttime2
 
@@ -267,7 +268,7 @@ void task4()
 
 void task5()
 {
-	const int N = 501;
+	const int N = 500;
 	double time = 0;
 	int a[N][N] = { 0 };
 	int u = 0;
@@ -289,21 +290,21 @@ void task5()
 	for (int i = 2; i < N; i++)
 	{
 		
-//#pragma omp parallel for
+#pragma omp parallel for
 		for (int j = 2 + u; j < N; j++)
 		{
 			a[i][j] = a[i - 2][j] + a[i][j - 2];
 			a[j][i] = a[i - 2][j] + a[i][j - 2];
 		
 		}
-//#pragma omp barrier
+#pragma omp barrier
 		u++;
 
 	}
 
 	time = omp_get_wtime() - time;
 
-	//cout.precision(2);
+	cout.precision(3);
 	cout.setf(std::ios::fixed);
 	cout << time << endl;
 
